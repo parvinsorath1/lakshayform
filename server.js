@@ -1,16 +1,9 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-
-// Use the URI from .env
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
+require('dotenv').config(); // Load environment variables
+const mongoose = require('mongoose'); // Import mongoose
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const User = require('./models/user');
+const User = require('./models/user'); // User model
 
 const app = express();
 
@@ -19,15 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-
 // MongoDB Connection
-mongoose.connect('mongodb+srv://sharpshooter6399:DbHMRmDUQerlZDyN@cluster0.dh7yf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
-
-
-
-
 
 // Routes
 app.get('/', (req, res) => {
@@ -59,6 +47,6 @@ app.post('/submit', async (req, res) => {
   }
 });
 
-
+// Server Setup
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
